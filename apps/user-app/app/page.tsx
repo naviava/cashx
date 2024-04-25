@@ -1,9 +1,14 @@
 "use client";
 
-import { useBalance } from "@cashx/store/useBalance";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { Appbar } from "@cashx/ui/appbar";
 
 export default function Home() {
-  const balance = useBalance();
+  const session = useSession();
 
-  return <main className="text-2xl font-bold">User app: {balance}</main>;
+  return (
+    <main className="text-2xl font-bold">
+      <Appbar onSignin={signIn} onSignout={signOut} user={session.data?.user} />
+    </main>
+  );
 }
