@@ -1,11 +1,10 @@
 {
   "extends": "@cashx/typescript-config/nextjs.json",
   "compilerOptions": {
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ]
+    "plugins": [{ "name": "next" }],
+    "paths": {
+      "~/*": ["./*"]
+    }
   },
   "include": [
     "next-env.d.ts",
