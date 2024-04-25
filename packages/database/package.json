@@ -1,0 +1,26 @@
+{
+  "name": "@cashx/db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:generate": "prisma generate",
+    "db:push": "prisma db push --skip-generate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@cashx/eslint-config": "workspace:*",
+    "@cashx/typescript-config": "workspace:*",
+    "prisma": "^5.12.1",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.12.1"
+  },
+  "exports": {
+    "./client": "./src/index.ts"
+  }
+}
