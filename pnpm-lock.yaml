@@ -23,6 +23,9 @@ importers:
 
   apps/bank_webhook_handler:
     dependencies:
+      '@cashx/db':
+        specifier: workspace:*
+        version: link:../../packages/database
       esbuild:
         specifier: ^0.20.2
         version: 0.20.2
