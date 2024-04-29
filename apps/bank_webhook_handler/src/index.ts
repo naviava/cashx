@@ -41,3 +41,7 @@ app.post("/hdfcbank", async (req, res) => {
     message: "Failed to capture transaction.",
   });
 });
+
+app.listen(3003, () => {
+  console.log("Server is running on port 3003");
+});
