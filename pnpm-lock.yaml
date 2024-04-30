@@ -182,6 +182,9 @@ importers:
       '@prisma/client':
         specifier: ^5.12.1
         version: 5.12.1(prisma@5.12.1)
+      bcrypt:
+        specifier: ^5.1.1
+        version: 5.1.1
     devDependencies:
       '@cashx/eslint-config':
         specifier: workspace:*
@@ -189,6 +192,9 @@ importers:
       '@cashx/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@types/bcrypt':
+        specifier: ^5.0.2
+        version: 5.0.2
       '@types/node':
         specifier: ^20.12.7
         version: 20.12.7
