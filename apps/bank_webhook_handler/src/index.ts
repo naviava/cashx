@@ -2,14 +2,15 @@ import express from "express";
 import db from "@cashx/db/client";
 
 const app = express();
+app.use(express.json());
 
 app.post("/hdfcbank", async (req, res) => {
   // TODO: Add zod validation.
   // TODO: Check if the request came from bank, use a webhook secret here.
   const paymentInfo = {
-    token: req.body.token,
+    token: req.body.token as string,
     userId: req.body.user_identifier,
-    amount: req.body.amount,
+    amount: Number(req.body.amount),
   };
 
   try {
@@ -17,7 +18,7 @@ app.post("/hdfcbank", async (req, res) => {
       db.balance.update({
         where: { userId: paymentInfo.userId },
         data: {
-          amount: { increment: paymentInfo.amount },
+          amount: { increment: Number(paymentInfo.amount) },
         },
       }),
       db.onRampTransaction.update({
@@ -26,7 +27,7 @@ app.post("/hdfcbank", async (req, res) => {
       }),
     ]);
 
-    res.status(200).json({
+    return res.status(200).json({
       message: "Captured transaction successfully.",
     });
   } catch (err) {
@@ -35,11 +36,10 @@ app.post("/hdfcbank", async (req, res) => {
       where: { token: paymentInfo.token },
       data: { status: "Failure" },
     });
+    return res.status(411).json({
+      message: "Failed to capture transaction.",
+    });
   }
-
-  res.status(411).json({
-    message: "Failed to capture transaction.",
-  });
 });
 
 app.listen(3003, () => {

@@ -4,6 +4,7 @@ import { Card } from "@cashx/ui/card";
 import { Select } from "@cashx/ui/select";
 import { useState } from "react";
 import { TextInput } from "@cashx/ui/text-input";
+import { createOnRampTransaction } from "~/lib/actions/create-on-ramp-transaction";
 
 const SUPPORTED_BANKS = [
   {
@@ -17,6 +18,8 @@ const SUPPORTED_BANKS = [
 ];
 
 export const AddMoney = () => {
+  const [value, setValue] = useState(0);
+  const [provider, setProvider] = useState(SUPPORTED_BANKS[0]?.name || "");
   const [redirectUrl, setRedirectUrl] = useState(
     SUPPORTED_BANKS[0]?.redirectUrl
   );
@@ -26,13 +29,18 @@ export const AddMoney = () => {
         <TextInput
           label={"Amount"}
           placeholder={"Amount"}
-          onChange={() => {}}
+          onChange={(val) => {
+            setValue(Number(val));
+          }}
         />
         <div className="py-4 text-left">Bank</div>
         <Select
           onSelect={(value: string) => {
             setRedirectUrl(
               SUPPORTED_BANKS.find((x) => x.name === value)?.redirectUrl || ""
+            );
+            setProvider(
+              SUPPORTED_BANKS.find((x) => x.name === value)?.name || ""
             );
           }}
           options={SUPPORTED_BANKS.map((x) => ({
@@ -42,8 +50,8 @@ export const AddMoney = () => {
         />
         <div className="flex justify-center pt-4">
           <Button
-            onClick={() => {
-              window.location.href = redirectUrl || "";
+            onClick={async () => {
+              await createOnRampTransaction(provider, value);
             }}
           >
             Add Money
