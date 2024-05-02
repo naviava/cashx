@@ -3,7 +3,7 @@ name: Build on any pull request
 on:
   pull_request:
     branches:
-      - master
+      - main
 
 jobs:
   build:
@@ -16,8 +16,11 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Install pnpm
+        run: npm install -g pnpm@8.9.0
+
       - name: Install dependencies
         run: pnpm install
 
       - name: Run Build
-        run: pnpm build
+        run: pnpm run build
