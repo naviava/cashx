@@ -28,3 +28,15 @@ jobs:
 
       - name: Verify Pushed Image
         run: docker pull naviava/cashx-user-app:latest # Replace with your Docker Hub username and repository
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            docker pull naviava/cashx-user-app:latest
+            docker stop cashx-user-app || true
+            docker rm cashx-user-app || true
+            docker run -d --name cashx-user-app -p 3005:3000 naviava/cashx-user-app:latest
